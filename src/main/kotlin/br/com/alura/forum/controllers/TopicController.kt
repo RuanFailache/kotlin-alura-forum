@@ -35,4 +35,11 @@ class TopicController(
     ) {
         service.update(dto)
     }
+
+    @DeleteMapping("/{id}")
+    fun delete(
+        @PathVariable id: Long
+    ) {
+        service.delete(id)
+    }
 }

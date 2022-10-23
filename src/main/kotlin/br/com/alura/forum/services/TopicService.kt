@@ -27,7 +27,7 @@ class TopicService(
         if (topic != null) {
             return topicOutputMapper.map(topic)
         }
-        throw Exception("Invalid id provided")
+        throw Exception("There is no topics registered with this id")
     }
 
     fun register(dto: NewTopicInput) {
@@ -51,6 +51,17 @@ class TopicService(
                         message = dto.message
                     }
                 )
+        } else {
+            throw Exception("There is no topics registered with this id")
+        }
+    }
+
+    fun delete(id: Long) {
+        val topic = topics.find { it.id == id }
+        if (topic != null) {
+            topics = topics.minus(topic)
+        } else {
+            throw Exception("There is no topics registered with this id")
         }
     }
 }
