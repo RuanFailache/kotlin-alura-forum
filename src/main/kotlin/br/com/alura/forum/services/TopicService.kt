@@ -1,6 +1,7 @@
 package br.com.alura.forum.services
 
 import br.com.alura.forum.dto.input.NewTopicInput
+import br.com.alura.forum.dto.input.UpdateTopicInput
 import br.com.alura.forum.dto.output.TopicOutput
 import br.com.alura.forum.mappers.input.NewTopicInputMapper
 import br.com.alura.forum.mappers.output.TopicOutputMapper
@@ -37,5 +38,19 @@ class TopicService(
                     id = topics.size.toLong() + 1
                 }
         )
+    }
+
+    fun update(dto: UpdateTopicInput) {
+        val topic = topics.find { it.id == dto.id }
+        if (topic != null) {
+            topics = topics
+                .minus(topic)
+                .plus(
+                    topic.apply {
+                        title = dto.title
+                        message = dto.message
+                    }
+                )
+        }
     }
 }

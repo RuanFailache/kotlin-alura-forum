@@ -6,8 +6,8 @@ import java.time.LocalDateTime
 
 data class TopicOutput(
     val id: Long,
-    val title: String,
-    val message: String,
+    var title: String,
+    var message: String,
     val status: StatusTopic,
     val createdAt: LocalDateTime
 ) {
