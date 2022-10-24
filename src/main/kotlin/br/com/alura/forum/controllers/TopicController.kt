@@ -4,7 +4,10 @@ import br.com.alura.forum.dto.input.NewTopicInput
 import br.com.alura.forum.dto.input.UpdateTopicInput
 import br.com.alura.forum.dto.output.TopicOutput
 import br.com.alura.forum.services.TopicService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.util.UriComponentsBuilder
 import javax.validation.Valid
 
 @RestController
@@ -13,8 +16,9 @@ class TopicController(
     private val service: TopicService,
 ) {
     @GetMapping
-    fun listAll(): List<TopicOutput> {
-        return service.listAll()
+    fun listAll(): ResponseEntity<List<TopicOutput>> {
+        val topicList: List<TopicOutput> = service.listAll()
+        return ResponseEntity.ok(topicList)
     }
 
     @GetMapping("/{id}")
@@ -25,18 +29,23 @@ class TopicController(
     @PostMapping
     fun register(
         @RequestBody @Valid dto: NewTopicInput,
-    ) {
-        service.register(dto)
+        uriBuilder: UriComponentsBuilder,
+    ): ResponseEntity<TopicOutput> {
+        val newTopic: TopicOutput = service.register(dto)
+        val uri = uriBuilder.path("/topics/${newTopic.id}").build().toUri()
+        return ResponseEntity.created(uri).body(newTopic)
     }
 
     @PutMapping
     fun update(
         @RequestBody @Valid dto: UpdateTopicInput
-    ) {
-        service.update(dto)
+    ): ResponseEntity<TopicOutput> {
+        val updatedTopic = service.update(dto)
+        return ResponseEntity.ok(updatedTopic)
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(
         @PathVariable id: Long
     ) {
