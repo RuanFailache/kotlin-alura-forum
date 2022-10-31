@@ -6,6 +6,7 @@ import br.com.alura.forum.dto.output.TopicOutput
 import br.com.alura.forum.exceptions.NotFoundException
 import br.com.alura.forum.mappers.input.NewTopicInputMapper
 import br.com.alura.forum.mappers.output.TopicOutputMapper
+import br.com.alura.forum.models.Topic
 import br.com.alura.forum.repositories.TopicRepository
 import org.springframework.stereotype.Service
 
@@ -17,10 +18,15 @@ class TopicService(
     private val newTopicInputMapper: NewTopicInputMapper,
     private val topicOutputMapper: TopicOutputMapper,
 ) {
-    fun listAll(): List<TopicOutput> {
-        return repository
-            .findAll()
-            .map { topic -> topicOutputMapper.map(topic) }
+    fun listAll(
+        courseName: String?,
+    ): List<TopicOutput> {
+        val topics: List<Topic> = if (courseName == null) {
+            repository.findAll()
+        } else {
+            repository.findByCourseName(courseName)
+        }
+        return topics.map { topic -> topicOutputMapper.map(topic) }
     }
 
     fun findById(id: Long): TopicOutput {

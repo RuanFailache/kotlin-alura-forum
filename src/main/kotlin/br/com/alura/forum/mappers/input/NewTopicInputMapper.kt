@@ -3,14 +3,14 @@ package br.com.alura.forum.mappers.input
 import br.com.alura.forum.dto.input.NewTopicInput
 import br.com.alura.forum.mappers.helpers.Mapper
 import br.com.alura.forum.models.Topic
+import br.com.alura.forum.services.AuthorService
 import br.com.alura.forum.services.CourseService
-import br.com.alura.forum.services.UserService
 import org.springframework.stereotype.Component
 
 @Component
 class NewTopicInputMapper(
     private val courseService: CourseService,
-    private val userService: UserService,
+    private val userService: AuthorService,
 ) : Mapper<NewTopicInput, Topic> {
     override fun map(item: NewTopicInput): Topic {
         return Topic(

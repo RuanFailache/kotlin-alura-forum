@@ -17,8 +17,10 @@ class TopicController(
     private val service: TopicService,
 ) {
     @GetMapping
-    fun listAll(): ResponseEntity<List<TopicOutput>> {
-        val topicList: List<TopicOutput> = service.listAll()
+    fun listAll(
+        @RequestParam(required = false) courseName: String?
+    ): ResponseEntity<List<TopicOutput>> {
+        val topicList: List<TopicOutput> = service.listAll(courseName)
         return ResponseEntity.ok(topicList)
     }
 

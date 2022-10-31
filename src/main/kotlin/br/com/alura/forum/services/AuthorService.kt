@@ -5,7 +5,7 @@ import br.com.alura.forum.repositories.UserRepository
 import org.springframework.stereotype.Service
 
 @Service
-class UserService(private val repository: UserRepository) {
+class AuthorService(private val repository: UserRepository) {
     fun findById(id: Long): Author {
         return repository.getReferenceById(id)
     }
