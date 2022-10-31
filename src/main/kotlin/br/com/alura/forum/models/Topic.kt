@@ -18,7 +18,7 @@ data class Topic(
     val course: Course,
 
     @ManyToOne
-    val author: User,
+    val author: Author,
 
     @Enumerated(value = EnumType.STRING)
     val status: StatusTopic = StatusTopic.WAITING_FOR_ANSWER,

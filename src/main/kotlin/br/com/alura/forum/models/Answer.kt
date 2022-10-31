@@ -13,7 +13,7 @@ data class Answer(
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
     @ManyToOne
-    val author: User,
+    val author: Author,
 
     @ManyToOne
     val topic: Topic,
