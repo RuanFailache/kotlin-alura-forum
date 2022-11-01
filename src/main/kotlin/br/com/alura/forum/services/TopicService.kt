@@ -8,6 +8,8 @@ import br.com.alura.forum.mappers.input.NewTopicInputMapper
 import br.com.alura.forum.mappers.output.TopicOutputMapper
 import br.com.alura.forum.models.Topic
 import br.com.alura.forum.repositories.TopicRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 const val notFoundMessage = "There is no topics registered with this id"
@@ -20,11 +22,12 @@ class TopicService(
 ) {
     fun listAll(
         courseName: String?,
-    ): List<TopicOutput> {
-        val topics: List<Topic> = if (courseName == null) {
-            repository.findAll()
+        pageable: Pageable
+    ): Page<TopicOutput> {
+        val topics: Page<Topic> = if (courseName == null) {
+            repository.findAll(pageable)
         } else {
-            repository.findByCourseName(courseName)
+            repository.findByCourseName(courseName, pageable)
         }
         return topics.map { topic -> topicOutputMapper.map(topic) }
     }

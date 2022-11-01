@@ -13,7 +13,7 @@ class TopicOutputMapper : Mapper<Topic, TopicOutput> {
             title = item.title,
             message = item.message,
             status = item.status,
-            createdAt = item.createdAt,
+            createdAt = item.created_at,
         )
     }
 }

@@ -4,6 +4,8 @@ import br.com.alura.forum.dto.input.NewTopicInput
 import br.com.alura.forum.dto.input.UpdateTopicInput
 import br.com.alura.forum.dto.output.TopicOutput
 import br.com.alura.forum.services.TopicService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -18,9 +20,13 @@ class TopicController(
 ) {
     @GetMapping
     fun listAll(
-        @RequestParam(required = false) courseName: String?
-    ): ResponseEntity<List<TopicOutput>> {
-        val topicList: List<TopicOutput> = service.listAll(courseName)
+        @RequestParam(required = false) courseName: String?,
+        page: Pageable
+    ): ResponseEntity<Page<TopicOutput>> {
+        val topicList: Page<TopicOutput> = service.listAll(
+            courseName,
+            page
+        )
         return ResponseEntity.ok(topicList)
     }
 

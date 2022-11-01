@@ -12,7 +12,7 @@ data class Topic(
 
     var message: String,
 
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    val created_at: LocalDateTime = LocalDateTime.now(),
 
     @ManyToOne
     val course: Course,
