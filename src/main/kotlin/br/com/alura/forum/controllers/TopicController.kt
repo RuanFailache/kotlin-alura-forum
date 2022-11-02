@@ -4,6 +4,8 @@ import br.com.alura.forum.dto.input.NewTopicInput
 import br.com.alura.forum.dto.input.UpdateTopicInput
 import br.com.alura.forum.dto.output.TopicOutput
 import br.com.alura.forum.services.TopicService
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -19,6 +21,7 @@ class TopicController(
     private val service: TopicService,
 ) {
     @GetMapping
+    @Cacheable("topics")
     fun listAll(
         @RequestParam(required = false) courseName: String?,
         page: Pageable
@@ -37,6 +40,7 @@ class TopicController(
 
     @PostMapping
     @Transactional
+    @CacheEvict(value = ["topics"], allEntries = true)
     fun register(
         @RequestBody @Valid dto: NewTopicInput,
         uriBuilder: UriComponentsBuilder,
@@ -48,6 +52,7 @@ class TopicController(
 
     @PutMapping
     @Transactional
+    @CacheEvict(value = ["topics"], allEntries = true)
     fun update(
         @RequestBody @Valid dto: UpdateTopicInput
     ): ResponseEntity<TopicOutput> {
@@ -58,6 +63,7 @@ class TopicController(
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
+    @CacheEvict(value = ["topics"], allEntries = true)
     fun delete(
         @PathVariable id: Long
     ) {

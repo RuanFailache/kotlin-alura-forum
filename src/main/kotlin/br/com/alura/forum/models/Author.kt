@@ -1,9 +1,6 @@
 package br.com.alura.forum.models
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 data class Author(
@@ -13,4 +10,10 @@ data class Author(
     val name: String,
 
     val email: String,
+
+    val password: String,
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_role")
+    val role: List<Role> = mutableListOf()
 )

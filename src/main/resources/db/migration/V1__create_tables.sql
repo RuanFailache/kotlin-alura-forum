@@ -6,15 +6,6 @@ create table author
     primary key (id)
 );
 
-insert into author
-values (1, 'Ruan Failache', 'ruan.failache@forum.com');
-
-insert into author
-values (2, 'Eliane Gomes', 'eli.gomes@forum.com');
-
-insert into author
-values (3, 'Subaru Sakaguchi', 'subaru.sakaguchi@forum.com');
-
 create table course
 (
     id       bigint      not null auto_increment,
@@ -23,14 +14,6 @@ create table course
     primary key (id)
 );
 
-insert into course
-values (1, 'Kotlin', 'Programação');
-
-insert into course
-values (2, 'Spring boot', 'Programação');
-
-insert into course
-values (3, 'Adobe After Effects', 'Design');
 
 create table topic
 (
