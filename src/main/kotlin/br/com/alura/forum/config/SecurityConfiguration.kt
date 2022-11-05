@@ -25,14 +25,11 @@ class SecurityConfiguration(
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .csrf()
-            .disable()
+            .csrf().disable()
             .authorizeRequests()
             .antMatchers("/topics").hasAuthority("READ_AND_WRITE")
-            .antMatchers("/login")
-            .permitAll()
-            .anyRequest()
-            .authenticated()
+            .antMatchers("/login").permitAll()
+            .anyRequest().authenticated()
 
         http.addFilterBefore(
             JWTloginFilter(jwtUtil = jwtUtil, authManager = configuration.authenticationManager),
